@@ -1,0 +1,22 @@
+{
+    "name": "goldencodes/vindi-laravel",
+    "description": "Golden Codes: Vindi Laravel",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Paulo Oliveira",
+            "email": "paulo@golden.codes"
+        }
+    ],
+    "require": {
+        "php": "^7.0",
+        "goldencodes/base":"0.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "GoldenCodes\\VindiLaravel\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
