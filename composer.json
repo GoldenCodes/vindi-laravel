@@ -6,6 +6,10 @@
         {
             "name": "Paulo Oliveira",
             "email": "paulo@golden.codes"
+        },
+        {
+            "name": "Fernando R. Rinaldi",
+            "email": "fernando.rinaldi@golden.codes"
         }
     ],
     "require": {
