@@ -45,7 +45,7 @@ abstract class ModelBase implements Arrayable {
      * Chave primária da model.
      *
      * @var int $primaryKey
-    */
+     */
     protected $primaryKey = 'id';
 
     /**
@@ -192,15 +192,36 @@ abstract class ModelBase implements Arrayable {
         return;
     }
 
+    private function toArrayMap(array $array) {
+        $array = (array) $array;
+
+        return array_map(function ($value) {
+
+            if ($value instanceof Arrayable) {
+                return $value->toArray();
+            }
+
+            if (is_array($value))
+                return $this->toArrayMap($value);
+
+            return $value;
+        }, $array);
+    }
+
     /**
      * @return array
      */
     public function toArray() {
-        return array_map(function ($value) {
-            return $value instanceof Arrayable ? $value->toArray() : (is_array($value) ? array_map(function($val) {
-                return $val instanceof Arrayable ? $val->toArray() : $val;
-            }, $value) : $value);
-        }, $this->attributesToArray());
+        $result =  $this->toArrayMap($this->attributesToArray());
+        return (array)json_decode(json_encode($result), true);
+    }
+
+    /**
+     * @return array
+     */
+    public function toArrayWithExtraAttributes() {
+        $result =  $this->toArrayMap($this->attributesToArray() + $this->getExtraAttributes());
+        return (array)json_decode(json_encode($result), true);
     }
 
     /**
