@@ -1,5 +1,5 @@
 <?php
-namespace GoldenCodes\Base\Provider;
+namespace GoldenCodes\VindiLaravel\Provider;
 
 use GoldenCodes\VindiLaravel\Models\AddressModel;
 use Illuminate\Support\ServiceProvider;
