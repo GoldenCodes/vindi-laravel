@@ -37,7 +37,7 @@ class ProductModel extends ModelBase {
         "metadata",
     ];
 
-    public static function getValidationRules(): array {
+    public function getValidationRules(): array {
         return [
             "name" => 'required',
             "status" => 'required',

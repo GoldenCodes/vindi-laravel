@@ -21,7 +21,7 @@ class MerchantUserModel extends ModelBase {
         'role_id'
     ];
 
-    public static function getValidationRules(): array {
+    public function getValidationRules(): array {
         return [
             "name" => "required",
             "email" => "required",

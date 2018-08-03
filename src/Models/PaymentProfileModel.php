@@ -75,7 +75,7 @@ class PaymentProfileModel extends ModelBase {
         return $response->status == 'success';
     }
 
-    public static function getValidationRules(): array {
+    public function getValidationRules(): array {
         return [
             "holder_name" => 'required',
             "card_expiration" => 'required',

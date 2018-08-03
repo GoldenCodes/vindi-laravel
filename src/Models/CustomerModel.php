@@ -37,7 +37,7 @@ class CustomerModel extends ModelBase {
         "phones",
     ];
 
-    public static function getValidationRules(): array {
+    public function getValidationRules(): array {
         return [
             "name" => "required",
             "email" => "required",

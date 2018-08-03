@@ -35,7 +35,7 @@ class DiscountModel extends ModelBase {
         "cycles"
     ];
 
-    public static function getValidationRules(): array {
+    public function getValidationRules(): array {
         return [
             "discount_type" => "required",
         ];
