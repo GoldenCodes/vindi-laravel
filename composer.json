@@ -14,7 +14,8 @@
     ],
     "require": {
         "php": "^7.0",
-        "goldencodes/base":"0.*"
+        "goldencodes/base":"0.*",
+        "vindi/vindi-php": "^1.2"
     },
     "autoload": {
         "psr-4": {
