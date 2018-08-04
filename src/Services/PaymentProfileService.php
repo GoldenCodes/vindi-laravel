@@ -2,7 +2,8 @@
 
 namespace GoldenCodes\VindiLaravel\Services;
 
-use GoldenCodes\VindiLaravel\Models;
+use GoldenCodes\VindiLaravel\Facades\VindiModelFacade;
+use GoldenCodes\VindiLaravel\Models\PaymentProfileModel;
 
 /**
  * Class PaymentProfileService
@@ -13,6 +14,6 @@ class PaymentProfileService extends ServiceBase {
     protected $vindiSDKClass = \Vindi\PaymentProfile::class;
 
     public function newModel($attributes = []) {
-        return Models\PaymentProfileModel::make($attributes);
+        return VindiModelFacade::get(PaymentProfileModel::class)::make($attributes);
     }
 }

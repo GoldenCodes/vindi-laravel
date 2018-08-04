@@ -2,7 +2,7 @@
 
 namespace GoldenCodes\VindiLaravel\Models;
 
-use GoldenCodes\VindiLaravel\Services\CustomerService;
+use GoldenCodes\VindiLaravel\Services\BillService;
 
 /**
  * Class BillModel
@@ -25,7 +25,7 @@ class BillModel extends ModelBase {
 
     public $timestamps = false;
 
-    protected static $vindiService = CustomerService::class;
+    protected static $vindiService = BillService::class;
 
     protected $fillable = [
         "id",

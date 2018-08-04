@@ -2,7 +2,8 @@
 
 namespace GoldenCodes\VindiLaravel\Services;
 
-use GoldenCodes\VindiLaravel\Models;
+use GoldenCodes\VindiLaravel\Facades\VindiModelFacade;
+use GoldenCodes\VindiLaravel\Models\ProductModel;
 
 /**
  * Class ProductService
@@ -13,6 +14,6 @@ class ProductService extends ServiceBase {
     protected $vindiSDKClass = \Vindi\Product::class;
 
     public function newModel($attributes = []) {
-        return Models\ProductModel::make($attributes);
+        return VindiModelFacade::get(ProductModel::class)::make($attributes);
     }
 }

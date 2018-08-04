@@ -2,7 +2,8 @@
 
 namespace GoldenCodes\VindiLaravel\Services;
 
-use GoldenCodes\VindiLaravel\Models;
+use GoldenCodes\VindiLaravel\Facades\VindiModelFacade;
+use GoldenCodes\VindiLaravel\Models\PlanModel;
 
 /**
  * Class PlanService
@@ -13,6 +14,6 @@ class PlanService extends ServiceBase {
     protected $vindiSDKClass = \Vindi\Plan::class;
 
     public function newModel($attributes = []) {
-        return Models\PlanModel::make($attributes);
+        return VindiModelFacade::get(PlanModel::class)::make($attributes);
     }
 }

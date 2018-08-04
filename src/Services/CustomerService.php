@@ -2,7 +2,8 @@
 
 namespace GoldenCodes\VindiLaravel\Services;
 
-use GoldenCodes\VindiLaravel\Models;
+use GoldenCodes\VindiLaravel\Facades\VindiModelFacade;
+use GoldenCodes\VindiLaravel\Models\CustomerModel;
 
 /**
  * Class CustomerService
@@ -13,6 +14,6 @@ class CustomerService extends ServiceBase {
     protected $vindiSDKClass = \Vindi\Customer::class;
 
     public function newModel($attributes = []) {
-        return Models\CustomerModel::make($attributes);
+        return VindiModelFacade::get(CustomerModel::class)::make($attributes);
     }
 }
