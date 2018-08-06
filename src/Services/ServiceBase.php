@@ -93,6 +93,25 @@ abstract class ServiceBase implements iRequestActions {
     }
 
     /**
+     * @param int $id
+     * @return ModelBase
+     * @throws RequestException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Vindi\Exceptions\RateLimitException
+     */
+    public function findOrNew(int $id) {
+        try {
+            return $this->newModel((array) $this->vindiSDK->get($id));
+        } catch (RequestException $e) {
+            if($e->getCode() == 404) {
+                return $this->newModel();
+            }
+
+            throw $e;
+        }
+    }
+
+    /**
      * Busca todos os itens de acordo com os parâmetros
      *
      * @param array $params
