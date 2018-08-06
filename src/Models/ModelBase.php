@@ -3,6 +3,8 @@
 namespace GoldenCodes\VindiLaravel\Models;
 
 use GoldenCodes\Base\Traits\hasValidation;
+use GoldenCodes\VindiLaravel\Facades\VindiModelFacade;
+use GoldenCodes\VindiLaravel\Library\VindiQueryBuilder;
 use GoldenCodes\VindiLaravel\Services\ServiceBase;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Concerns;
@@ -14,7 +16,10 @@ use Illuminate\Database\Eloquent\Concerns;
  */
 abstract class ModelBase implements Arrayable {
 
-    use Concerns\HasAttributes;
+    use Concerns\HasAttributes {
+        setAttribute as protected setAttr;
+    }
+
     use Concerns\GuardsAttributes;
     use Concerns\HidesAttributes;
     use Concerns\HasTimestamps;
@@ -149,6 +154,18 @@ abstract class ModelBase implements Arrayable {
         return $this;
     }
 
+    public function setAttribute($key, $value) {
+        if(method_exists($this, $key)) {
+            if(is_object($value)) {
+                $value = (array) $value;
+            }
+
+            $this->attributes[$key] = VindiModelFacade::get($this->$key())::make($value);
+        } else {
+            $this->setAttr($key, $value);
+        }
+    }
+
     /**
      * @return int|null
      */
@@ -255,5 +272,12 @@ abstract class ModelBase implements Arrayable {
      */
     public function delete() {
         static::$vindiService::getInstance()->delete($this);
+    }
+
+    /**
+     * @return VindiQueryBuilder
+     */
+    public static function query() {
+        return new VindiQueryBuilder(static::$vindiService);
     }
 }

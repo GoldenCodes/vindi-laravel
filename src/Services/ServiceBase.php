@@ -3,6 +3,7 @@
 namespace GoldenCodes\VindiLaravel\Services;
 
 use GoldenCodes\Base\Exception\CustomResponseException;
+use GoldenCodes\VindiLaravel\Contracts\iRequestActions;
 use GoldenCodes\VindiLaravel\Models\ModelBase;
 use Illuminate\Database\Eloquent\Collection;
 use Vindi\Exceptions\RequestException;
@@ -11,7 +12,7 @@ use Vindi\Exceptions\RequestException;
  * Serviço responsável pela comunicação com o Vindi
  * @package GoldenCodes\VindiLaravel\Services
  */
-abstract class ServiceBase {
+abstract class ServiceBase implements iRequestActions {
 
     /** @var \Vindi\Resource $vindiSDK <Instância do serviço do SDK> */
     protected $vindiSDK;
@@ -39,39 +40,26 @@ abstract class ServiceBase {
     }
 
     /**
-     * Retorna o primeiro item encontrado
-     *
-     * @param array $filter
-     * @param array $params
-     * @return ModelBase
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Vindi\Exceptions\RateLimitException
      * @throws \Vindi\Exceptions\RequestException
      */
-    public function first(array $filter = [], $params = []) {
-        return $this
-            ->all($filter, array_merge(['per_page' => 1], $params))
-            ->first();
+    public function first(array $params = []) {
+        $params['per_page'] = 1;
+
+        return $this->get($params)->first();
     }
 
     /**
-     * Busca o primeiro item ou retorna uma nova instância
-     *
-     * @param array $filter
-     * @return ModelBase
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Vindi\Exceptions\RateLimitException
      * @throws \Vindi\Exceptions\RequestException
      */
-    public function firstOrNew(array $filter = []) {
-        return $this->first($filter) ?? $this->newModel();
+    public function firstOrNew(array $params = []) {
+        return $this->first($params) ?? $this->newModel();
     }
 
     /**
-     * Busca o item pelo ID
-     *
-     * @param int $id
-     * @return ModelBase
      * @throws RequestException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Vindi\Exceptions\RateLimitException
@@ -89,18 +77,13 @@ abstract class ServiceBase {
     }
 
     /**
-     * Busca o item pelo ID ou lança uma exception
-     *
-     * @param int $id
      * @throws CustomResponseException
      * @throws RequestException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Vindi\Exceptions\RateLimitException
      */
-    public static function findOrFail(int $id) {
-        $instance = static::getInstance();
-
-        $item = $instance->find($id);
+    public function findOrFail(int $id) {
+        $item = $this->find($id);
 
         if(empty($item->getKey())) {
             throw new CustomResponseException('Not found', 404);
@@ -110,19 +93,15 @@ abstract class ServiceBase {
     }
 
     /**
-     * Busca todos os itens
+     * Busca todos os itens de acordo com os parâmetros
      *
-     * @param array $filter
+     * @param array $params
      * @return Collection
+     * @throws RequestException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Vindi\Exceptions\RateLimitException
-     * @throws \Vindi\Exceptions\RequestException
      */
-    public function all(array $filter = [], $params = []) {
-        if(!empty($filter)) {
-            $params['query'] = $this->getQuery($filter);
-        }
-
+    public function get(array $params = []) {
         return $this->newCollection($this->vindiSDK->all($params));
     }
 

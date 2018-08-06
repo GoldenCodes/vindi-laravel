@@ -5,7 +5,7 @@ namespace GoldenCodes\VindiLaravel\Models;
 /**
  * Class RoleModel
  * @package GoldenCodes\VindiLaravel\Models
- * @see https://vindi.github.io/api-docs/dist/#!/roles/GET_version_roles_format
+ * @see https://vindi.github.io/api-docs/dist/#!/roles
  */
 class RoleModel extends ModelBase {
 

@@ -55,11 +55,11 @@ class PaymentProfileModel extends ModelBase {
      * @throws \Vindi\Exceptions\RequestException
      */
     public static function getActiveCard($customer_id) {
-        return (static::$vindiService)::getInstance()->firstOrNew([
+        return static::query()->where([
             'customer_id' => $customer_id,
             'status' => 'active',
             'type' => 'PaymentProfile::CreditCard'
-        ], ['sort_order' => 'desc']);
+        ])->firstOrNew(['sort_order' => 'desc']);
     }
 
     /**
@@ -71,7 +71,7 @@ class PaymentProfileModel extends ModelBase {
      * @throws \Vindi\Exceptions\RequestException
      */
     public function isValid(): bool {
-        $response = $this->vindiService->post($this, 'verify');
+        $response = (static::$vindiService)::getInstance()->post($this, 'verify');
         return $response->status == 'success';
     }
 
