@@ -70,10 +70,6 @@ class VindiQueryBuilder implements iRequestActions {
         return $this->addItem($field, "<=", $value, $condition);
     }
 
-    private function getQueryArray() {
-        return ['query' => (string)$this];
-    }
-
     private function addItem($field, $operator, $value, $condition = 'AND') {
         $this->validateCondition($condition);
 
@@ -113,7 +109,7 @@ class VindiQueryBuilder implements iRequestActions {
      * @throws \Vindi\Exceptions\RequestException
      */
     public function get(array $params = []) {
-        $params['query'] = $this->getQueryArray();
+        $params['query'] = (string)$this;
         return $this->vindiService::getInstance()->get($params);
     }
 
@@ -125,7 +121,7 @@ class VindiQueryBuilder implements iRequestActions {
      * @throws \Vindi\Exceptions\RequestException
      */
     public function first(array $params = []) {
-        $params['query'] = $this->getQueryArray();
+        $params['query'] = (string)$this;
         return $this->vindiService::getInstance()->first($params);
     }
 
@@ -137,7 +133,8 @@ class VindiQueryBuilder implements iRequestActions {
      * @throws \Vindi\Exceptions\RequestException
      */
     public function firstOrNew(array $params = []) {
-        $params['query'] = $this->getQueryArray();
+        $params['query'] = (string)$this;
+
         return $this->vindiService::getInstance()->firstOrNew($params);
     }
 
