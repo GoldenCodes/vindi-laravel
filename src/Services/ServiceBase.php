@@ -127,6 +127,7 @@ abstract class ServiceBase implements iRequestActions {
     /**
      * Cria ou atualiza um item no Vindi
      *
+     * @return boolean
      * @param ModelBase $model
      * @throws RequestException
      * @throws \GuzzleHttp\Exception\GuzzleException
@@ -138,6 +139,7 @@ abstract class ServiceBase implements iRequestActions {
         } else {
             $model->fill((array) $this->vindiSDK->create($model->toArray()));
         }
+        return !empty($model->id);
     }
 
     /**
