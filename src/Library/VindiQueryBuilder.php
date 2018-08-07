@@ -39,7 +39,7 @@ class VindiQueryBuilder implements iRequestActions {
             $return .= $query['field'].$query['operator'].$query['value'] . " ";
 
             if($index < $limit) {
-                $return .= "{$query['operator']} ";
+                $return .= "{$query['condition']} ";
             }
         }
 
