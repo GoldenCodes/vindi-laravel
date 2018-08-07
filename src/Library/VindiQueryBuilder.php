@@ -70,10 +70,6 @@ class VindiQueryBuilder implements iRequestActions {
         return $this->addItem($field, "<=", $value, $condition);
     }
 
-    public function whereNot($field, $value, $condition = 'AND') {
-        return $this->addItem($field, "not", $value, $condition);
-    }
-
     private function getQueryArray() {
         return ['query' => (string)$this];
     }
