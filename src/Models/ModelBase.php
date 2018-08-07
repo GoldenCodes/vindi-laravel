@@ -256,13 +256,14 @@ abstract class ModelBase implements Arrayable {
 
     /**
      * Salva o item no Vindi
-     *
+     * 
+     * @return boolean
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Vindi\Exceptions\RateLimitException
      * @throws \Vindi\Exceptions\RequestException
      */
     public function save() {
-        static::$vindiService::getInstance()->save($this);
+        return static::$vindiService::getInstance()->save($this);
     }
 
     /**
