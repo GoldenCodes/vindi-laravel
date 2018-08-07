@@ -1,45 +1,67 @@
 <?php
 namespace GoldenCodes\VindiLaravel\Provider;
 
+use GoldenCodes\VindiLaravel\Models\AddressModel;
+use GoldenCodes\VindiLaravel\Models\BillItemModel;
+use GoldenCodes\VindiLaravel\Models\BillModel;
+use GoldenCodes\VindiLaravel\Models\CustomerModel;
+use GoldenCodes\VindiLaravel\Models\DiscountModel;
+use GoldenCodes\VindiLaravel\Models\MerchantUserModel;
+use GoldenCodes\VindiLaravel\Models\PaymentCompanyModel;
+use GoldenCodes\VindiLaravel\Models\PaymentConditionDiscountModel;
+use GoldenCodes\VindiLaravel\Models\PaymentConditionModel;
+use GoldenCodes\VindiLaravel\Models\PaymentMethodModel;
+use GoldenCodes\VindiLaravel\Models\PaymentProfileModel;
+use GoldenCodes\VindiLaravel\Models\PeriodModel;
+use GoldenCodes\VindiLaravel\Models\PhoneModel;
+use GoldenCodes\VindiLaravel\Models\PlanItemModel;
+use GoldenCodes\VindiLaravel\Models\PlanModel;
+use GoldenCodes\VindiLaravel\Models\PricingSchemaModel;
+use GoldenCodes\VindiLaravel\Models\ProductItemModel;
+use GoldenCodes\VindiLaravel\Models\ProductModel;
+use GoldenCodes\VindiLaravel\Models\RoleModel;
+use GoldenCodes\VindiLaravel\Models\SubscriptionModel;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\File;
 
 class VindiLaravelModelProvider extends ServiceProvider
 {
-    static $models = [];
 
     public function boot() {}
 
-    public function setModels() {
-        $files = [];
-
-        $pathModels = str_replace(["Provider"], "Models", __DIR__);
-
-        if (File::exists($pathModels)) {
-            $files = File::files($pathModels);
-        }
-
-        $namespaces = array_map(function($file) use($pathModels) {
-            return "GoldenCodes\VindiLaravel\Models\\" . str_replace([".php"], "", $file->getFileName());
-        }, $files);
-
-        if(!empty($namespaces)) {
-            foreach($namespaces as $namespace) {
-                static::$models[$namespace] = $namespace;
-            }
-        }
-    }
-
     public function register() {
-        $this->setModels();
         $this->registerModels();
     }
 
     public function registerModels() {
-        foreach(static::$models as $key => $model) {
-            $this->app->bind($key, function() use($key) {
-                return new static::$models[$key];
+        foreach($this->getModels() as $key => $model) {
+            $this->app->bind($key, function() use($model) {
+                return new $model;
             });
         }
+    }
+
+    protected function getModels() {
+        return [
+            AddressModel::class => AddressModel::class,
+            BillItemModel::class => AddressModel::class,
+            BillModel::class => BillModel::class,
+            CustomerModel::class => CustomerModel::class,
+            DiscountModel::class => DiscountModel::class,
+            MerchantUserModel::class => MerchantUserModel::class,
+            PaymentCompanyModel::class => PaymentCompanyModel::class,
+            PaymentConditionDiscountModel::class => PaymentConditionDiscountModel::class,
+            PaymentConditionModel::class => PaymentConditionModel::class,
+            PaymentMethodModel::class => PaymentMethodModel::class,
+            PaymentProfileModel::class => PaymentProfileModel::class,
+            PeriodModel::class => PeriodModel::class,
+            PhoneModel::class => PhoneModel::class,
+            PlanItemModel::class => PlanItemModel::class,
+            PlanModel::class => PlanModel::class,
+            PricingSchemaModel::class => PricingSchemaModel::class,
+            ProductItemModel::class => ProductItemModel::class,
+            ProductModel::class => ProductModel::class,
+            RoleModel::class => RoleModel::class,
+            SubscriptionModel::class => SubscriptionModel::class,
+        ];
     }
 }
