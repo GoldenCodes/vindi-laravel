@@ -43,7 +43,7 @@ class VindiLaravelModelProvider extends ServiceProvider
     protected function getModels() {
         return [
             AddressModel::class => AddressModel::class,
-            BillItemModel::class => AddressModel::class,
+            BillItemModel::class => BillItemModel::class,
             BillModel::class => BillModel::class,
             CustomerModel::class => CustomerModel::class,
             DiscountModel::class => DiscountModel::class,
