@@ -9,7 +9,7 @@ class VindiModelFacade extends Facade {
     public static function get(string $className) {
         static::$className = $className;
 
-        return static::getFacadeRoot();
+        return resolve($className);
     }
 
     protected static function getFacadeAccessor() { return static::$className; }
