@@ -15,7 +15,7 @@ use Vindi\Exceptions\RequestException;
 abstract class ServiceBase implements iRequestActions {
 
     /** @var \Vindi\Resource $vindiSDK <Instância do serviço do SDK> */
-    protected $vindiSDK;
+    public $vindiSDK;
 
     /** @var string $vindiSDKClass */
     protected $vindiSDKClass;
