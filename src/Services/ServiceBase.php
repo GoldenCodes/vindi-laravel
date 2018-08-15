@@ -69,7 +69,7 @@ abstract class ServiceBase implements iRequestActions {
             return $this->newModel((array) $this->vindiSDK->get($id));
         } catch (RequestException $e) {
             if($e->getCode() == 404) {
-                return $this->newModel();
+                return null;
             }
 
             throw $e;
