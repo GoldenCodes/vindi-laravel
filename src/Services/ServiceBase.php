@@ -85,7 +85,7 @@ abstract class ServiceBase implements iRequestActions {
     public function findOrFail(int $id) {
         $item = $this->find($id);
 
-        if(empty($item->getKey())) {
+        if(empty($item)) {
             throw new CustomResponseException('Not found', 404);
         }
 
