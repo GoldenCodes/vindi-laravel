@@ -121,7 +121,7 @@ abstract class ServiceBase implements iRequestActions {
      * @throws \Vindi\Exceptions\RateLimitException
      */
     public function get(array $params = []) {
-        return $this->newCollection($this->vindiSDK->all($params));
+        return $this->newCollection((array) $this->vindiSDK->all($params));
     }
 
     /**

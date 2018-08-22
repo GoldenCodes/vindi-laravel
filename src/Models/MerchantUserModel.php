@@ -2,6 +2,8 @@
 
 namespace GoldenCodes\VindiLaravel\Models;
 
+use GoldenCodes\VindiLaravel\Services\MerchantUserService;
+
 /**
  * Class MerchantUserModel
  * @package GoldenCodes\VindiLaravel\Models
@@ -14,6 +16,8 @@ namespace GoldenCodes\VindiLaravel\Models;
 class MerchantUserModel extends ModelBase {
 
     public $timestamps = false;
+
+    protected static $vindiService = MerchantUserService::class;
 
     protected $fillable = [
         'name',
