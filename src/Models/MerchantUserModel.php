@@ -20,6 +20,7 @@ class MerchantUserModel extends ModelBase {
     protected static $vindiService = MerchantUserService::class;
 
     protected $fillable = [
+        'id',
         'name',
         'email',
         'role_id'
